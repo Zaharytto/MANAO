@@ -56,7 +56,6 @@
         $(document).ready(function(){
             $("#form-create-user").submit(function(e){
                 e.preventDefault();
-
                 
                 if ($('input.login').val().length >= 6) {
                     
@@ -79,7 +78,6 @@
                 if ($('input.password').val() === $('input.confirm_password').val()) {
                     var passwordReg = $('input.password').val();
                     
-                    // hex_md5("123dafd");
                     
                 } else {
                     var confirm_passwordError= document.getElementsByClassName("confirm_password-error")[0];
@@ -146,13 +144,13 @@
             <label>Логин</label>
             <input class= 'loginAuth' type="text" name="login" value = "" required/>
         </div>
-        <p class= "error loginAuth-error">Пользователь не найден</p>
 
         <div class="form-element">
             <label>Пароль</label>
             <input class= 'passwordAuth' type="password" name="password" value = "" required/>
         </div>
-        <p class= "error passwordAuth-error">Неверный пароль</p>
+        <p id= "auth-error" style= "background: orangered"></p>
+        <p id= "auth-success" style= "background: yellowgreen"></p>
 
         <button class= 'authorization' type="submit" name="send">Войти</button>
 
@@ -162,16 +160,38 @@
         $(document).ready(function(){
             $("#form-auth-user").submit(function(e){
                 e.preventDefault();
-
+                
+                
                 var loginAuth = $('input.loginAuth').val();
                 var passwordAuth = $('input.passwordAuth').val();
 
                 $.ajax({
                   method: "POST",
+                  dataType: 'json',
                   url: "/TZ2/app/get.php",
-                  data: { login: loginAuth, password: passwordAuth}
+                  data: { login: loginAuth, password: passwordAuth},
+                  
+                  success: function (data) { 
+                    if (data.status === false) {
+                        console.log('false');
+
+                        var authError = document.getElementById("auth-error");
+                        var authSuccess = document.getElementById("auth-success");
+                        authSuccess.textContent = '';
+                        authError.textContent = data.message;
+                    } else {
+                        console.log('true');
+
+                        var authError = document.getElementById("auth-error");
+                        var authSuccess = document.getElementById("auth-success");
+                        authError.textContent = '';
+                        authSuccess.textContent = data.message;
+                    }
+                }
                 })
 
+                $('input.loginAuth').val('');
+                $('input.passwordAuth').val('');
                 
             })
         });

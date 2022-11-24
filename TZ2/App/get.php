@@ -2,22 +2,18 @@
 
 require_once $_SERVER['DOCUMENT_ROOT'].'/TZ2/src/UserRepository.php';
 
-
-
-
 try {
     $userRepository = new UserRepository();
-    $user = $userRepository->get($id);
+    $user = $userRepository->authorization($_POST['login'], $_POST['password']);
     
-    echo json_decode([
+    echo json_encode([
         'status' => true,
-        'message' => '',
-        'user' => $user
+        'message' => 'Вы авторизовались'
     ]);
 
 } catch(Exception $exception) {
   
-    echo json_decode([
+    echo json_encode([
         'status' => false,
         'message' => $exception->getMessage()
     ]);

@@ -56,9 +56,42 @@ class UserRepository
         } 
 
         throw new Exception('Пользователь с таким логином уже существует');
-
     }
 
+    
+    public function searchId($login)
+    {
+        $file = $this->getFile();
+        $users = (array) json_decode($file, true);
+
+        foreach($users as $key => $value) {
+            if ($users[$key]['login'] === $login) {
+                return $key;
+            } 
+        }
+        return null;
+    }
+
+    public function authorization(string $login, string $password)
+    {
+        $id = $this->searchId($login);
+
+        if ($id === null) {
+            throw new Exception('Такого пользователя не существует!!');
+        }
+
+        $user = $this->get($id);
+
+        if ($user === null) {
+            throw new Exception('Такого пользователя не существует!!');
+        }
+
+        if ($user['password'] !== md5($password)){
+            throw new Exception('Неверный пароль');
+        }
+
+        return true;
+    }
     
 
     public function get(int $id): ?array
@@ -109,7 +142,8 @@ class UserRepository
 
         return;
     }
-
-
 }
+
+
+
 
