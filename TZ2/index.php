@@ -173,14 +173,12 @@
                   
                   success: function (data) { 
                     if (data.status === false) {
-                        console.log('false');
 
                         var authError = document.getElementById("auth-error");
                         var authSuccess = document.getElementById("auth-success");
                         authSuccess.textContent = '';
                         authError.textContent = data.message;
                     } else {
-                        console.log('true');
 
                         var authError = document.getElementById("auth-error");
                         var authSuccess = document.getElementById("auth-success");
