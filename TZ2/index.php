@@ -15,7 +15,6 @@
 <body>
 
     <p id= "all"></p>
-    <p id= "success" style= "display: none">Вы зарегистрированы!</p>
 
     <form id="form-create-user" >
         <div class="form-element">
@@ -121,9 +120,8 @@
                         all.textContent = data.message;
                     } else {
                         var all = document.getElementById("all");
-                        var success = document.getElementById("success");
                         all.textContent = '';
-                        success.style.display = 'block';
+                        document.location.href = '/TZ2/route/profile.php';
                     }
                 }
                 })
@@ -150,7 +148,6 @@
             <input class= 'passwordAuth' type="password" name="password" value = "" required/>
         </div>
         <p id= "auth-error" style= "background: orangered"></p>
-        <p id= "auth-success" style= "background: yellowgreen"></p>
 
         <button class= 'authorization' type="submit" name="send">Войти</button>
 
@@ -175,15 +172,12 @@
                     if (data.status === false) {
 
                         var authError = document.getElementById("auth-error");
-                        var authSuccess = document.getElementById("auth-success");
-                        authSuccess.textContent = '';
                         authError.textContent = data.message;
                     } else {
 
                         var authError = document.getElementById("auth-error");
-                        var authSuccess = document.getElementById("auth-success");
                         authError.textContent = '';
-                        authSuccess.textContent = data.message;
+                        document.location.href = '/TZ2/route/profile.php';
                     }
                 }
                 })

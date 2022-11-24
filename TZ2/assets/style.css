@@ -46,14 +46,6 @@ button {
     color: white;
     border: none;
 }
-p.success,
-p.error {
-    color: white;
-    font-family: lato;
-    background: yellowgreen;
-    display: inline-block;
-    padding: 2px 10px;
-}
 
 p.error {
     display: none;
@@ -61,8 +53,4 @@ p.error {
 }
 #all {
     background: orangered;
-}
-
-#success {
-    background: yellowgreen;
 }
