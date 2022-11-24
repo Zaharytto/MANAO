@@ -37,7 +37,8 @@ form {
 div.form-element {
     margin: 20px 0;
 }
-button {
+button,
+.button {
     padding: 10px;
     font-size: 1.5rem;
     font-family: 'Lato';
