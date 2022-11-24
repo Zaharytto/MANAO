@@ -42,10 +42,11 @@ class UserRepository
 
             $file = $this->getFile();
             $users = (array) json_decode($file);
+            $salt = 'sflprt49fhi2';
                     
             $users[] = [
                 'login' => $login,
-                'password' => md5($password),
+                'password' => md5($password . $salt),
                 'email' => $email,
                 'name' => $name
             ];
@@ -75,6 +76,7 @@ class UserRepository
     public function authorization(string $login, string $password)
     {
         $id = $this->searchId($login);
+        $salt = 'sflprt49fhi2';
 
         if ($id === null) {
             throw new Exception('Такого пользователя не существует!!');
@@ -86,7 +88,7 @@ class UserRepository
             throw new Exception('Такого пользователя не существует!!');
         }
 
-        if ($user['password'] !== md5($password)){
+        if ($user['password'] !== md5($password  . $salt)){
             throw new Exception('Неверный пароль');
         }
 
