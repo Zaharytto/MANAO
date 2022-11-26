@@ -26,3 +26,4 @@ try {
         'message' => $exception->getMessage()
     ]);
 }
+
