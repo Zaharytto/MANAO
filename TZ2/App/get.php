@@ -2,7 +2,7 @@
 
 require_once $_SERVER['DOCUMENT_ROOT'].'/TZ2/src/UserRepository.php';
 
-// if ($_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest') {}
+
 
 try {
     $userRepository = new UserRepository();
@@ -17,7 +17,8 @@ try {
     
     echo json_encode([
         'status' => true,
-        'message' => 'Вы авторизовались'
+        'message' => '',
+        'name' => $user['name']
     ]);
 
 } catch(Exception $exception) {

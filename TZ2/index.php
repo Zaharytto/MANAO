@@ -14,6 +14,11 @@
 </head>
 <body>
 
+    <div id= "profile">
+        <h1 id= "hello"></h1>
+        <button onclick="document.location='/TZ2/index.php'">Выход</button>
+    </div>    
+
     <p id= "all"></p>
 
     <form id="form-create-user" >
@@ -109,7 +114,16 @@
                     } else {
                         var all = document.getElementById("all");
                         all.textContent = '';
-                        document.location.href = '/TZ2/route/profile.php';
+
+                        var formCreateUser = document.getElementById("form-create-user");
+                        formCreateUser.style.display = 'none';
+                        var formAuthUser = document.getElementById("form-auth-user");
+                        formAuthUser.style.display = 'none';
+                        var profile = document.getElementById("profile");
+                        profile.style.display = 'block';                       
+
+                        var hello = document.getElementById("hello");
+                        hello.textContent = 'hello ' + nameReg;
                     }
                 }
                 })
@@ -126,16 +140,21 @@
 
     <form id="form-auth-user" >
 
+        <p id= "auth-error" style= "background: orangered"></p>
+
         <div class="form-element">
             <label>Логин</label>
             <input class= 'loginAuth' type="text" name="login" value = "" required/>
         </div>
+        <p class= "error loginAuth-error">Логин должен состоять минимум из 6 симфолов, без пробела</p>
+
 
         <div class="form-element">
             <label>Пароль</label>
             <input class= 'passwordAuth' type="password" name="password" value = "" required/>
         </div>
-        <p id= "auth-error" style= "background: orangered"></p>
+        <p class= "error passwordAuth-error">Пароль должен состоять минимум из 6 симфолов, из цифр и букв, без пробела</p>
+
 
         <button class= 'authorization' type="submit" name="send">Войти</button>
 
@@ -145,9 +164,22 @@
         $(document).ready(function(){
             $("#form-auth-user").submit(function(e){
                 e.preventDefault();
+
+                if ($('input.loginAuth').val().length >= 6 && /^[A-Z\d\S]+$/i.test($('input.loginAuth').val())) {     
+                    var loginAuth  = $('input.loginAuth').val();
+                } else {
+                    var loginAuthError= document.getElementsByClassName("loginAuth-error")[0];
+                    loginAuthError.style.display = 'block';
+                }
+
+                if ($('input.passwordAuth').val().length >= 6 && /(([a-z]+\d+)|(\d+[a-z]+))[a-z\d]*/i.test($('input.passwordAuth').val()) && /^[A-Z\d]+$/i.test($('input.passwordAuth').val())
+                ) {
+                    var passwordAuth = $('input.passwordAuth').val();
+                } else {
+                    var passwordAuthError= document.getElementsByClassName("passwordAuth-error")[0];
+                    passwordAuthError.style.display = 'block';
+                }                
                 
-                var loginAuth = $('input.loginAuth').val();
-                var passwordAuth = $('input.passwordAuth').val();
 
                 $.ajax({
                   method: "POST",
@@ -164,16 +196,27 @@
 
                         var authError = document.getElementById("auth-error");
                         authError.textContent = '';
-                        document.location.href = '/TZ2/route/profile.php';
+
+                        var formCreateUser = document.getElementById("form-create-user");
+                        formCreateUser.style.display = 'none';
+                        var formAuthUser = document.getElementById("form-auth-user");
+                        formAuthUser.style.display = 'none';
+                        var profile = document.getElementById("profile");
+                        profile.style.display = 'block';
+
+                        var hello = document.getElementById("hello");
+                        hello.textContent = 'hello ' + data.name;
+                        
                     }
                 }
                 })
 
                 $('input.loginAuth').val('');
                 $('input.passwordAuth').val('');
-                
+
             })
         });
+
     </script>
 
 
