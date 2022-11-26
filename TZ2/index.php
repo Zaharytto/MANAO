@@ -21,13 +21,13 @@
             <label>Логин</label>
             <input class= 'login' type="text" name="login" value = "" required/>
         </div>
-        <p class= "error login-error">Логин должен состоять минимум из 6 симфолов</p>
+        <p class= "error login-error">Логин должен состоять минимум из 6 симфолов, без пробела</p>
 
         <div class="form-element">
             <label>Пароль</label>
             <input class= 'password' type="password" name="password" value = "" required/>
         </div>
-        <p class= "error password-error">Пароль должен состоять минимум из 6 симфолов, из цифр и букв</p>
+        <p class= "error password-error">Пароль должен состоять минимум из 6 симфолов, из цифр и букв, без пробела</p>
 
         <div class="form-element">
             <label>Подтверждение пароля</label>
@@ -56,28 +56,23 @@
             $("#form-create-user").submit(function(e){
                 e.preventDefault();
                 
-                if ($('input.login').val().length >= 6) {
-                    
+                if ($('input.login').val().length >= 6 && /^[A-Z\d\S]+$/i.test($('input.login').val())) {     
                     var loginReg = $('input.login').val();
                 } else {
-                     
                     var loginError= document.getElementsByClassName("login-error")[0];
                     loginError.style.display = 'block';
-
                 }
 
-                if ($('input.password').val().length >= 6 && /^[a-zA-Z\d]+$/.test($('input.password').val())) {
-                    
+                if ($('input.password').val().length >= 6 && /(([a-z]+\d+)|(\d+[a-z]+))[a-z\d]*/i.test($('input.password').val()) && /^[A-Z\d]+$/i.test($('input.password').val())
+                ) {
+                    var passwordR = $('input.password').val();
                 } else {
                     var passwordError= document.getElementsByClassName("password-error")[0];
                     passwordError.style.display = 'block';
-
                 }
 
                 if ($('input.password').val() === $('input.confirm_password').val()) {
-                    var passwordReg = $('input.password').val();
-                    
-                    
+                    var passwordReg = passwordR;       
                 } else {
                     var confirm_passwordError= document.getElementsByClassName("confirm_password-error")[0];
                     confirm_passwordError.style.display = 'block';
@@ -88,25 +83,18 @@
                     return re.test(String(emailReg).toLowerCase());
                 }
 
-                if (validateEmail($('input.email').val())) {
-                    
-                    var emailReg = $('input.email').val();
-                    
-                } else {
-                    
+                if (validateEmail($('input.email').val())) {  
+                    var emailReg = $('input.email').val();  
+                } else {   
                     var emailError= document.getElementsByClassName("email-error")[0];
-                    emailError.style.display = 'block';
-                    
+                    emailError.style.display = 'block';   
                 }
 
-                if ($('input.name').val().length >= 2 && /^[a-zA-Z]+$/.test($('input.name').val())) {
-                    
+                if ($('input.name').val().length >= 2 && /^[a-zA-Z]+$/.test($('input.name').val())) {   
                     var nameReg = $('input.name').val();
-                } else {
-                    
+                } else {   
                     var nameError= document.getElementsByClassName("name-error")[0];
                     nameError.style.display = 'block';
-
                 }
 
                 $.ajax({
@@ -157,7 +145,6 @@
         $(document).ready(function(){
             $("#form-auth-user").submit(function(e){
                 e.preventDefault();
-                
                 
                 var loginAuth = $('input.loginAuth').val();
                 var passwordAuth = $('input.passwordAuth').val();
