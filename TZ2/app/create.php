@@ -6,7 +6,7 @@ try {
     $userRepository = new UserRepository();
     $userRepository->create($_POST['login'], $_POST['password'], $_POST['email'], $_POST['name']);
     session_start();
-    setcookie('name', $_POST['name'], time() + 60 * 60 * 24 * 30, '/TZ2');
+    setcookie('login', $_POST['login'], time() + 60 * 60 * 24 * 30, '/TZ2');
     $_SESSION['login'] = $_POST['login'];
     
     echo json_encode([
@@ -21,4 +21,3 @@ try {
         'message' => $exception->getMessage()
     ]);
 }
-

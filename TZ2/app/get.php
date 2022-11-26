@@ -9,7 +9,7 @@ try {
     $user = $userRepository->get($id);
 
     session_start();
-    setcookie('name', $user['name'], time() + 60 * 60 * 24 * 30, '/TZ2');
+    setcookie('login', $user['login'], time() + 60 * 60 * 24 * 30, '/TZ2');
     $_SESSION['login'] = $_POST['login'];
     
     
@@ -26,4 +26,3 @@ try {
         'message' => $exception->getMessage()
     ]);
 }
-
