@@ -2,8 +2,6 @@
 
 require_once $_SERVER['DOCUMENT_ROOT'].'/TZ2/src/UserRepository.php';
 
-
-
 try {
     $userRepository = new UserRepository();
     $userRepository->authorization($_POST['login'], $_POST['password']);
@@ -28,4 +26,3 @@ try {
         'message' => $exception->getMessage()
     ]);
 }
-
