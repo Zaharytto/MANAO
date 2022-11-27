@@ -55,7 +55,6 @@
         <button class= 'registration' type="submit" name="register">Регистрация</button>
     </form>
 
-
     <script>
         $(document).ready(function(){
             $("#form-create-user").submit(function(e){
