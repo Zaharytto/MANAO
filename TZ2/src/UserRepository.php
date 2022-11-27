@@ -2,6 +2,8 @@
 
 class UserRepository
 {
+    private string $salt = 'sflprt49fhi2';
+
     private const FILE_PATH = '/TZ2/data/repository.json';
 
     public function __construct()
@@ -42,11 +44,10 @@ class UserRepository
 
             $file = $this->getFile();
             $users = (array) json_decode($file);
-            $salt = 'sflprt49fhi2';
                     
             $users[] = [
                 'login' => $login,
-                'password' => md5($password . $salt),
+                'password' => md5($password . $this->salt),
                 'email' => $email,
                 'name' => $name
             ];
@@ -60,7 +61,7 @@ class UserRepository
     }
 
     
-    public function searchId($login)
+    public function searchId($login): ?int
     {
         $file = $this->getFile();
         $users = (array) json_decode($file, true);
@@ -73,22 +74,21 @@ class UserRepository
         return null;
     }
 
-    public function authorization(string $login, string $password)
+    public function authorization(string $login, string $password): bool
     {
         $id = $this->searchId($login);
-        $salt = 'sflprt49fhi2';
 
         if ($id === null) {
-            throw new Exception('Такого пользователя не существует!!');
+            throw new Exception('Такого пользователя не существует');
         }
 
         $user = $this->get($id);
 
         if ($user === null) {
-            throw new Exception('Такого пользователя не существует!!');
+            throw new Exception('Такого пользователя не существует');
         }
 
-        if ($user['password'] !== md5($password  . $salt)){
+        if ($user['password'] !== md5($password  . $this->salt)){
             throw new Exception('Неверный пароль');
         }
 
