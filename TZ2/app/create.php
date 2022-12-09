@@ -6,8 +6,8 @@ try {
     $userRepository = new UserRepository();
     $userRepository->create($_POST['login'], $_POST['password'], $_POST['email'], $_POST['name']);
     session_start();
-    setcookie('login', $_POST['login'], time() + 60 * 60 * 24 * 30, '/TZ2');
-    $_SESSION['login'] = $_POST['login'];
+    setcookie('name', $_POST['name'], time() + 60 * 60 * 24 * 30, '/TZ2');
+    $_SESSION['name'] = $_POST['name'];
     
     echo json_encode([
         'status' => true,

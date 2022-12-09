@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,8 +19,17 @@
 
     <div id= "profile">
         <h1 id= "hello"></h1>
-        <button onclick="document.location='/TZ2/index.php'">Выход</button>
+        <button onclick="document.location='/TZ2/app/exitProfile.php'">Выход</button>
+    </div>
+
+    <?php if (!empty($_SESSION['name'])) :?>
+
+    <div id= "profile-cookie">
+        <h1 id= "hello"><?='hello ' . $_SESSION['name']?></h1>
+        <button onclick="document.location='/TZ2/app/exitProfile.php'">Выход</button>
     </div>    
+
+    <?php else :?>
 
     <p id= "all"></p>
 
@@ -53,7 +65,33 @@
         <p class= "error name-error">Имя должено состоять минимум из 2 симфолов, только буквы</p>
 
         <button class= 'registration' type="submit" name="register">Регистрация</button>
+    </form> 
+    
+
+
+    <form id="form-auth-user" >
+
+        <p id= "auth-error" style= "background: orangered"></p>
+
+        <div class="form-element">
+            <label>Логин</label>
+            <input class= 'loginAuth' type="text" name="login" value = "" required/>
+        </div>
+        <p class= "error loginAuth-error">Логин должен состоять минимум из 6 симфолов, без пробела</p>
+
+
+        <div class="form-element">
+            <label>Пароль</label>
+            <input class= 'passwordAuth' type="password" name="password" value = "" required/>
+        </div>
+        <p class= "error passwordAuth-error">Пароль должен состоять минимум из 6 симфолов, из цифр и букв, без пробела</p>
+
+
+        <button class= 'authorization' type="submit" name="send">Войти</button>
+
     </form>
+    
+    <?php endif; ?>
 
     <script>
         $(document).ready(function(){
@@ -132,34 +170,11 @@
                 $('input.confirm_password').val('');
                 $('input.email').val('');
                 $('input.name').val('');
-
             })
             });;
-    </script>
-
-    <form id="form-auth-user" >
-
-        <p id= "auth-error" style= "background: orangered"></p>
-
-        <div class="form-element">
-            <label>Логин</label>
-            <input class= 'loginAuth' type="text" name="login" value = "" required/>
-        </div>
-        <p class= "error loginAuth-error">Логин должен состоять минимум из 6 симфолов, без пробела</p>
+    
 
 
-        <div class="form-element">
-            <label>Пароль</label>
-            <input class= 'passwordAuth' type="password" name="password" value = "" required/>
-        </div>
-        <p class= "error passwordAuth-error">Пароль должен состоять минимум из 6 симфолов, из цифр и букв, без пробела</p>
-
-
-        <button class= 'authorization' type="submit" name="send">Войти</button>
-
-    </form>
-
-    <script>
         $(document).ready(function(){
             $("#form-auth-user").submit(function(e){
                 e.preventDefault();
@@ -179,7 +194,7 @@
                     passwordAuthError.style.display = 'block';
                 }                
                 
-
+                
                 $.ajax({
                   method: "POST",
                   dataType: 'json',

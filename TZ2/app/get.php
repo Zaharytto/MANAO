@@ -9,8 +9,8 @@ try {
     $user = $userRepository->get($id);
 
     session_start();
-    setcookie('login', $user['login'], time() + 60 * 60 * 24 * 30, '/TZ2');
-    $_SESSION['login'] = $_POST['login'];
+    setcookie('name', $user['name'], time() + 60 * 60 * 24 * 30, '/TZ2');
+    $_SESSION['name'] = $user['name'];
     
     
     echo json_encode([
